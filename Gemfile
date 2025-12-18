@@ -86,6 +86,3 @@ group :test do
   gem "capybara-lockstep"
   gem "selenium-webdriver"
 end
-
-
-gem "annotate", "~> 2.6"

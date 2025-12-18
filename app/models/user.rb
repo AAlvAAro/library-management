@@ -3,6 +3,8 @@
 class User < ApplicationRecord
   has_secure_password
 
+  enum :role, { librarian: 0, member: 1 }, default: :member
+
   generates_token_for :email_verification, expires_in: 2.days do
     email
   end

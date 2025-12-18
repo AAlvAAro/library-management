@@ -77,9 +77,6 @@ GEM
       uri (>= 0.13.1)
     addressable (2.8.8)
       public_suffix (>= 2.0.2, < 8.0)
-    annotate (2.6.5)
-      activerecord (>= 2.3.0)
-      rake (>= 0.8.7)
     ast (2.4.3)
     authentication-zero (4.0.3)
     base64 (0.3.0)
@@ -430,7 +427,6 @@ PLATFORMS
   x86_64-linux-musl
 
 DEPENDENCIES
-  annotate (~> 2.6)
   authentication-zero
   bcrypt (~> 3.1.7)
   bootsnap

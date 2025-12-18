@@ -25,7 +25,28 @@ See also:
    ```bash
    bin/setup
    ```
-3. Open http://localhost:3000
+3. Run migrations and seed the database:
+   ```bash
+   rails db:migrate
+   rails db:seed
+   ```
+4. Open http://localhost:3000
+
+## Test Credentials
+
+The application includes two test users with different roles:
+
+### Librarian Account
+- **Email:** librarian@bookmanagement.com
+- **Username:** librarian_1
+- **Password:** password123456
+- **Role:** Librarian (full access)
+
+### Member Account
+- **Email:** member@bookmanagement.com
+- **Username:** member_1
+- **Password:** password123456
+- **Role:** Member (limited access)
 
 ## Enabling SSR
 
@@ -49,22 +70,22 @@ This starter kit comes with optional SSR support. To enable it, follow these ste
      #   cmd: bundle exec vite ssr
      #   options:
      #     network-alias: vite_ssr
-      
+
    # ...
-      
+
    env:
      clear:
        # Uncomment to enable SSR:
        # INERTIA_SSR_ENABLED: true
        # INERTIA_SSR_URL: "http://vite_ssr:13714"
-      
+
    # ...
-      
+
    builder:
      # Uncomment to enable SSR:
      # dockerfile: Dockerfile-ssr
    ```
-   
+
 That's it! Now you can deploy your app with SSR support.
 
 ## License

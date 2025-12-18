@@ -17,9 +17,14 @@ import { UserMenuContent } from "@/components/user-menu-content"
 import { useIsMobile } from "@/hooks/use-mobile"
 
 export function NavUser() {
-  const { auth } = usePage().props
+  const page = usePage()
+  const auth = page.props.auth as any
   const { state } = useSidebar()
   const isMobile = useIsMobile()
+
+  if (!auth || !auth.user) {
+    return null
+  }
 
   return (
     <SidebarMenu>

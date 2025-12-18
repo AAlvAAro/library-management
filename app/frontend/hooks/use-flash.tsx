@@ -5,13 +5,15 @@ import type { Flash } from "@/types"
 
 export const useFlash = () => {
   router.on("beforeUpdate", (event) => {
-    const flash = event.detail.page.props.flash as Flash
-    if (flash.alert) {
+    const flash = event.detail.page.props.flash as Flash | undefined
+    if (flash?.alert) {
       toast.error(flash.alert)
     }
-    if (flash.notice) {
+    if (flash?.notice) {
       toast(flash.notice)
     }
-    event.detail.page.props.flash = {}
+    if (flash) {
+      event.detail.page.props.flash = {}
+    }
   })
 }

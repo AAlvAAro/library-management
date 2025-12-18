@@ -10,6 +10,10 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
+require "faker"
+
+puts "Creating users..."
+
 User.find_or_create_by!(email: "librarian@bookmanagement.com") do |user|
   user.name = "librarian_1"
   user.password = "password123456"
@@ -25,3 +29,45 @@ User.find_or_create_by!(email: "member@bookmanagement.com") do |user|
   user.role = :member
   user.verified = true
 end
+
+puts "Users created!"
+
+puts "Creating books..."
+
+genres = [
+  "Fiction",
+  "Non-Fiction",
+  "Science Fiction",
+  "Fantasy",
+  "Mystery",
+  "Thriller",
+  "Romance",
+  "Horror",
+  "Biography",
+  "History",
+  "Science",
+  "Self-Help",
+  "Business",
+  "Philosophy",
+  "Poetry",
+  "Drama",
+  "Adventure",
+  "Children's",
+  "Young Adult",
+  "Graphic Novel"
+]
+
+25.times do
+  total = rand(1..20)
+  Book.create!(
+    title: Faker::Book.title,
+    author: Faker::Book.author,
+    genre: genres.sample,
+    isbn: Faker::Code.isbn,
+    total_copies: total,
+    available_copies: rand(0..total)
+  )
+end
+
+puts "25 books created!"
+puts "Seed data loaded successfully!"

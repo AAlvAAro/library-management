@@ -5,16 +5,30 @@ class BooksController < InertiaController
   before_action :require_librarian, only: [:new, :create, :edit, :update, :destroy]
 
   def index
-    @books = if params[:query].present?
-      Book.search(params[:query])
-    else
-      Book.all
+    @books = Book.all
+    @books = @books.search(params[:query]) if params[:query].present?
+
+    # Apply filters
+    case params[:filter]
+    when "available"
+      @books = @books.where("available_copies > 0")
+    when "borrowed"
+      @books = @books.where("available_copies < total_copies")
+    when "due_today"
+      @books = @books.joins(:borrowings)
+        .where(borrowings: {returned_at: nil})
+        .where("DATE(borrowings.due_date) = ?", Date.today)
+        .distinct
     end
+
+    total_count = @books.count
 
     render inertia: "books/index", props: {
       books: @books.as_json(only: [:id, :title, :author, :genre, :isbn, :total_copies, :available_copies]),
       query: params[:query],
-      can_manage: Current.user&.librarian?
+      filter: params[:filter],
+      can_manage: Current.user&.librarian?,
+      total_count: total_count
     }
   end
 

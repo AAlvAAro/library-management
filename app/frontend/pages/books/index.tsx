@@ -23,7 +23,9 @@ interface Book {
 interface Props {
   books: Book[]
   query?: string
+  filter?: string
   can_manage: boolean
+  total_count: number
 }
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -33,7 +35,7 @@ const breadcrumbs: BreadcrumbItem[] = [
   },
 ]
 
-export default function Index({ books, query, can_manage }: Props) {
+export default function Index({ books, query, filter, can_manage, total_count }: Props) {
   const [searchQuery, setSearchQuery] = useState(query || "")
 
   useEffect(() => {
@@ -52,6 +54,10 @@ export default function Index({ books, query, can_manage }: Props) {
     setSearchQuery("")
   }
 
+  const handleFilterChange = (newFilter: string) => {
+    router.get(booksPath(), { filter: newFilter === filter ? undefined : newFilter, query: searchQuery }, { preserveState: true })
+  }
+
   return (
     <AppLayout breadcrumbs={breadcrumbs}>
       <Head title="Books" />
@@ -63,6 +69,11 @@ export default function Index({ books, query, can_manage }: Props) {
             <p className="text-muted-foreground">
               Browse and search our book collection
             </p>
+            {can_manage && (
+              <p className="text-sm text-muted-foreground mt-1">
+                Total: {total_count} books
+              </p>
+            )}
           </div>
           {can_manage && (
             <Button asChild>
@@ -73,6 +84,42 @@ export default function Index({ books, query, can_manage }: Props) {
             </Button>
           )}
         </div>
+
+        <div className="flex flex-col gap-4">
+          {can_manage && (
+            <div className="flex gap-2">
+              <Button
+                variant={filter === "available" ? "default" : "outline"}
+                size="sm"
+                onClick={() => handleFilterChange("available")}
+              >
+                Available Books
+              </Button>
+              <Button
+                variant={filter === "borrowed" ? "default" : "outline"}
+                size="sm"
+                onClick={() => handleFilterChange("borrowed")}
+              >
+                Borrowed Books
+              </Button>
+              <Button
+                variant={filter === "due_today" ? "default" : "outline"}
+                size="sm"
+                onClick={() => handleFilterChange("due_today")}
+              >
+                Due Today
+              </Button>
+              {filter && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => handleFilterChange("")}
+                >
+                  Clear Filter
+                </Button>
+              )}
+            </div>
+          )}
 
         <div className="flex gap-2">
           <div className="relative flex-1">
@@ -155,9 +202,10 @@ export default function Index({ books, query, can_manage }: Props) {
 
         {books.length > 0 && (
           <p className="text-sm text-muted-foreground text-center">
-            Showing {books.length} {books.length === 1 ? "book" : "books"}
+            Showing {books.length} of {total_count} {total_count === 1 ? "book" : "books"}
           </p>
         )}
+        </div>
       </div>
     </AppLayout>
   )

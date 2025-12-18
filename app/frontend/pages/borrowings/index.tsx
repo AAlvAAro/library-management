@@ -1,4 +1,4 @@
-import { Head, Link } from "@inertiajs/react"
+import { Head, Link, router } from "@inertiajs/react"
 import { BookMarked, Calendar, AlertCircle } from "lucide-react"
 
 import AppLayout from "@/layouts/app-layout"
@@ -28,6 +28,7 @@ interface Borrowing {
 
 interface Props {
   borrowings: Borrowing[]
+  filter?: string
 }
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -37,9 +38,13 @@ const breadcrumbs: BreadcrumbItem[] = [
   },
 ]
 
-export default function Index({ borrowings }: Props) {
+export default function Index({ borrowings, filter }: Props) {
   const activeBorrowings = borrowings.filter((b) => b.active)
   const returnedBorrowings = borrowings.filter((b) => !b.active)
+
+  const handleFilterChange = (newFilter: string) => {
+    router.get(borrowingsPath(), { filter: newFilter === filter ? undefined : newFilter }, { preserveState: true })
+  }
 
   return (
     <AppLayout breadcrumbs={breadcrumbs}>
@@ -59,6 +64,32 @@ export default function Index({ borrowings }: Props) {
               Browse Books
             </Link>
           </Button>
+        </div>
+
+        <div className="flex gap-2">
+          <Button
+            variant={filter === "due_today" ? "default" : "outline"}
+            size="sm"
+            onClick={() => handleFilterChange("due_today")}
+          >
+            Due Today
+          </Button>
+          <Button
+            variant={filter === "overdue" ? "default" : "outline"}
+            size="sm"
+            onClick={() => handleFilterChange("overdue")}
+          >
+            Overdue
+          </Button>
+          {filter && (
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => handleFilterChange("")}
+            >
+              Clear Filter
+            </Button>
+          )}
         </div>
 
         {borrowings.length === 0 ? (

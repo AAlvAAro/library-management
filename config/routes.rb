@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   post "sign_up", to: "users#create"
 
   resources :sessions, only: [:destroy]
-  resource :users, only: [:destroy]
+  resources :users, only: [:index, :destroy]
 
   namespace :identity do
     resource :email_verification, only: [:show, :create]

@@ -4,9 +4,17 @@ class BorrowingsController < InertiaController
   before_action :set_borrowing, only: [:return]
 
   def index
-    @borrowings = Current.user.borrowings
-      .includes(:book)
-      .order(created_at: :desc)
+    @borrowings = Current.user.borrowings.includes(:book)
+
+    # Apply filters
+    case params[:filter]
+    when "due_today"
+      @borrowings = @borrowings.active.where("DATE(due_date) = ?", Date.today)
+    when "overdue"
+      @borrowings = @borrowings.overdue
+    end
+
+    @borrowings = @borrowings.order(created_at: :desc)
 
     render inertia: "borrowings/index", props: {
       borrowings: @borrowings.as_json(
@@ -14,7 +22,8 @@ class BorrowingsController < InertiaController
           book: {only: [:id, :title, :author, :genre, :isbn]}
         },
         methods: [:active?, :overdue?]
-      )
+      ),
+      filter: params[:filter]
     }
   end
 

@@ -77,9 +77,9 @@ export default function Dashboard() {
                       <Users className="h-6 w-6 text-primary" />
                     </div>
                     <div>
-                      <CardTitle>Users</CardTitle>
+                      <CardTitle>Members</CardTitle>
                       <CardDescription>
-                        Manage library users
+                        View members with overdue books
                       </CardDescription>
                     </div>
                   </div>

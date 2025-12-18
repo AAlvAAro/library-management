@@ -19,6 +19,32 @@ RSpec.describe "Books", type: :request do
       get books_path, params: {query: "test"}
       expect(response).to have_http_status(:success)
     end
+
+    context "with filters" do
+      let!(:available_book) { create(:book, available_copies: 5, total_copies: 10) }
+      let!(:borrowed_book) { create(:book, available_copies: 2, total_copies: 10) }
+      let!(:unavailable_book) { create(:book, available_copies: 0, total_copies: 10) }
+
+      it "filters available books" do
+        sign_in_as librarian
+        get books_path, params: {filter: "available"}
+        expect(response).to have_http_status(:success)
+      end
+
+      it "filters borrowed books" do
+        sign_in_as librarian
+        get books_path, params: {filter: "borrowed"}
+        expect(response).to have_http_status(:success)
+      end
+
+      it "filters books due today" do
+        sign_in_as librarian
+        book_due_today = create(:book)
+        create(:borrowing, book: book_due_today, user: member, due_date: Date.today)
+        get books_path, params: {filter: "due_today"}
+        expect(response).to have_http_status(:success)
+      end
+    end
   end
 
   describe "GET /books/:id" do

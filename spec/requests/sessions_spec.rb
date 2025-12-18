@@ -14,12 +14,22 @@ RSpec.describe "Sessions", type: :request do
 
   describe "POST /sign_in" do
     context "with valid credentials" do
-      it "redirects to the root url" do
-        post sign_in_url, params: {email: user.email, password: "Secret1*3*5*"}
-        expect(response).to redirect_to(dashboard_url)
+      context "as member" do
+        let(:member) { create(:user, :member) }
 
-        get dashboard_url
-        expect(response).to have_http_status(:success)
+        it "redirects to borrowings page" do
+          post sign_in_url, params: {email: member.email, password: "Secret1*3*5*"}
+          expect(response).to redirect_to(borrowings_url)
+        end
+      end
+
+      context "as librarian" do
+        let(:librarian) { create(:user, :librarian) }
+
+        it "redirects to books page" do
+          post sign_in_url, params: {email: librarian.email, password: "Secret1*3*5*"}
+          expect(response).to redirect_to(books_url)
+        end
       end
     end
 

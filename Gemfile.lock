@@ -77,6 +77,9 @@ GEM
       uri (>= 0.13.1)
     addressable (2.8.8)
       public_suffix (>= 2.0.2, < 8.0)
+    annotate (2.6.5)
+      activerecord (>= 2.3.0)
+      rake (>= 0.8.7)
     ast (2.4.3)
     authentication-zero (4.0.3)
     base64 (0.3.0)
@@ -341,6 +344,8 @@ GEM
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 4.0)
       websocket (~> 1.0)
+    shoulda-matchers (6.5.0)
+      activesupport (>= 5.2.0)
     solid_cable (3.0.12)
       actioncable (>= 7.2)
       activejob (>= 7.2)
@@ -425,6 +430,7 @@ PLATFORMS
   x86_64-linux-musl
 
 DEPENDENCIES
+  annotate (~> 2.6)
   authentication-zero
   bcrypt (~> 3.1.7)
   bootsnap
@@ -445,6 +451,7 @@ DEPENDENCIES
   rspec-rails (~> 8.0)
   rubocop-rails-omakase
   selenium-webdriver
+  shoulda-matchers (~> 6.0)
   solid_cable
   solid_cache
   solid_queue

@@ -67,6 +67,8 @@ group :development, :test do
 
   # Fixtures replacement with a straightforward definition syntax
   gem "factory_bot_rails"
+
+  gem "shoulda-matchers", "~> 6.0"
 end
 
 group :development do
@@ -84,3 +86,6 @@ group :test do
   gem "capybara-lockstep"
   gem "selenium-webdriver"
 end
+
+
+gem "annotate", "~> 2.6"

@@ -1,12 +1,12 @@
 import { Head, Link, router } from "@inertiajs/react"
-import { ArrowLeft, Edit, Trash2, BookOpen } from "lucide-react"
+import { ArrowLeft, Edit, Trash2, BookOpen, BookMarked, RotateCcw } from "lucide-react"
 
 import AppLayout from "@/layouts/app-layout"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
-import { booksPath, bookPath, editBookPath } from "@/routes"
+import { booksPath, bookPath, editBookPath, borrowingsPath, returnBorrowingPath } from "@/routes"
 import type { BreadcrumbItem } from "@/types"
 
 interface Book {
@@ -21,12 +21,25 @@ interface Book {
   updated_at: string
 }
 
+interface Borrowing {
+  id: number
+  borrowed_at: string
+  due_date: string
+  overdue?: boolean
+  user: {
+    id: number
+    name: string
+    email: string
+  }
+}
+
 interface Props {
   book: Book
   can_manage: boolean
+  active_borrowings: Borrowing[]
 }
 
-export default function Show({ book, can_manage }: Props) {
+export default function Show({ book, can_manage, active_borrowings }: Props) {
   const breadcrumbs: BreadcrumbItem[] = [
     {
       title: "Books",
@@ -153,7 +166,57 @@ export default function Show({ book, can_manage }: Props) {
                   </p>
                 </div>
               )}
+
+              {!can_manage && (
+                <Button
+                  onClick={() => router.post(borrowingsPath(), { book_id: book.id } as any)}
+                  className="w-full"
+                  disabled={!isAvailable}
+                >
+                  <BookMarked className="mr-2 h-4 w-4" />
+                  {isAvailable ? "Borrow This Book" : "Currently Unavailable"}
+                </Button>
+              )}
             </div>
+
+            {can_manage && active_borrowings.length > 0 && (
+              <>
+                <Separator />
+                <div className="space-y-4">
+                  <h3 className="font-semibold">Active Borrowings</h3>
+                  <div className="space-y-3">
+                    {active_borrowings.map((borrowing) => (
+                      <Card key={borrowing.id}>
+                        <CardContent className="pt-6">
+                          <div className="flex items-start justify-between">
+                            <div className="space-y-1">
+                              <p className="font-medium">{borrowing.user.name}</p>
+                              <p className="text-sm text-muted-foreground">{borrowing.user.email}</p>
+                              <div className="flex gap-2 mt-2">
+                                <Badge variant="outline">
+                                  Borrowed: {new Date(borrowing.borrowed_at).toLocaleDateString()}
+                                </Badge>
+                                <Badge variant={borrowing.overdue ? "destructive" : "secondary"}>
+                                  Due: {new Date(borrowing.due_date).toLocaleDateString()}
+                                  {borrowing.overdue && " (Overdue)"}
+                                </Badge>
+                              </div>
+                            </div>
+                            <Button
+                              size="sm"
+                              onClick={() => router.patch(returnBorrowingPath(borrowing.id))}
+                            >
+                              <RotateCcw className="mr-2 h-4 w-4" />
+                              Mark as Returned
+                            </Button>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                </div>
+              </>
+            )}
 
             <Separator />
 

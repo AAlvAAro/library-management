@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class BooksController < ApplicationController
+class BooksController < InertiaController
   before_action :set_book, only: [:show, :edit, :update, :destroy]
   before_action :require_librarian, only: [:new, :create, :edit, :update, :destroy]
 
@@ -19,9 +19,16 @@ class BooksController < ApplicationController
   end
 
   def show
+    active_borrowings = @book.borrowings.active.includes(:user)
+
     render inertia: "books/show", props: {
       book: @book.as_json(only: [:id, :title, :author, :genre, :isbn, :total_copies, :available_copies, :created_at, :updated_at]),
-      can_manage: Current.user&.librarian?
+      can_manage: Current.user&.librarian?,
+      active_borrowings: active_borrowings.as_json(
+        only: [:id, :borrowed_at, :due_date],
+        include: {user: {only: [:id, :name, :email]}},
+        methods: [:overdue?]
+      )
     }
   end
 

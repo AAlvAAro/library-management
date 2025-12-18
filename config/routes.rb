@@ -2,6 +2,11 @@
 
 Rails.application.routes.draw do
   resources :books
+  resources :borrowings, only: [:index, :create] do
+    member do
+      patch :return
+    end
+  end
 
   get  "sign_in", to: "sessions#new", as: :sign_in
   post "sign_in", to: "sessions#create"

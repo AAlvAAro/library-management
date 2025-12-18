@@ -1,13 +1,13 @@
 import { Head, Link, router } from "@inertiajs/react"
 import { useState, useEffect } from "react"
-import { BookOpen, Plus, Search, X } from "lucide-react"
+import { BookOpen, Plus, Search, X, BookMarked } from "lucide-react"
 
 import AppLayout from "@/layouts/app-layout"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { booksPath, bookPath, newBookPath } from "@/routes"
+import { booksPath, bookPath, newBookPath, borrowingsPath } from "@/routes"
 import type { BreadcrumbItem } from "@/types"
 
 interface Book {
@@ -131,9 +131,21 @@ export default function Index({ books, query, can_manage }: Props) {
                       <span className="text-muted-foreground">ISBN:</span>
                       <span className="font-mono text-xs">{book.isbn}</span>
                     </div>
-                    <Button asChild variant="outline" className="w-full mt-4">
-                      <Link href={bookPath(book.id)}>View Details</Link>
-                    </Button>
+                    <div className="flex gap-2 mt-4">
+                      {!can_manage && (
+                        <Button
+                          onClick={() => router.post(borrowingsPath(), { book_id: book.id } as any)}
+                          className="flex-1"
+                          disabled={book.available_copies === 0}
+                        >
+                          <BookMarked className="mr-2 h-4 w-4" />
+                          {book.available_copies === 0 ? "Unavailable" : "Borrow"}
+                        </Button>
+                      )}
+                      <Button asChild variant="outline" className={!can_manage ? "flex-1" : "w-full"}>
+                        <Link href={bookPath(book.id)}>View Details</Link>
+                      </Button>
+                    </div>
                   </div>
                 </CardContent>
               </Card>

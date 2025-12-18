@@ -1,5 +1,5 @@
 import { Link, usePage } from "@inertiajs/react"
-import { BookOpen, Folder, LayoutGrid, Library } from "lucide-react"
+import { BookOpen, Folder, LayoutGrid, Library, BookMarked, Users } from "lucide-react"
 
 import { NavFooter } from "@/components/nav-footer"
 import { NavMain } from "@/components/nav-main"
@@ -13,7 +13,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
-import { dashboardPath, booksPath } from "@/routes"
+import { dashboardPath, booksPath, borrowingsPath, usersPath } from "@/routes"
 import type { NavItem } from "@/types"
 
 import AppLogo from "./app-logo"
@@ -41,12 +41,26 @@ export function AppSidebar() {
       href: dashboardPath(),
       icon: LayoutGrid,
     },
+    {
+      title: "Books",
+      href: booksPath(),
+      icon: Library,
+    },
+    ...(!isLibrarian
+      ? [
+          {
+            title: "My Borrowings",
+            href: borrowingsPath(),
+            icon: BookMarked,
+          },
+        ]
+      : []),
     ...(isLibrarian
       ? [
           {
-            title: "Books",
-            href: booksPath(),
-            icon: Library,
+            title: "Users",
+            href: usersPath(),
+            icon: Users,
           },
         ]
       : []),

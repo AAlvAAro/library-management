@@ -69,6 +69,9 @@ group :development, :test do
   gem "factory_bot_rails"
 
   gem "shoulda-matchers", "~> 6.0"
+
+  # Faker for generating fake data
+  gem "faker"
 end
 
 group :development do

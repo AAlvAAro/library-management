@@ -1,5 +1,5 @@
-import { Link } from "@inertiajs/react"
-import { BookOpen, Folder, LayoutGrid } from "lucide-react"
+import { Link, usePage } from "@inertiajs/react"
+import { BookOpen, Folder, LayoutGrid, Library } from "lucide-react"
 
 import { NavFooter } from "@/components/nav-footer"
 import { NavMain } from "@/components/nav-main"
@@ -13,18 +13,10 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
-import { dashboardPath } from "@/routes"
+import { dashboardPath, booksPath } from "@/routes"
 import type { NavItem } from "@/types"
 
 import AppLogo from "./app-logo"
-
-const mainNavItems: NavItem[] = [
-  {
-    title: "Dashboard",
-    href: dashboardPath(),
-    icon: LayoutGrid,
-  },
-]
 
 const footerNavItems: NavItem[] = [
   {
@@ -40,6 +32,26 @@ const footerNavItems: NavItem[] = [
 ]
 
 export function AppSidebar() {
+  const { auth } = usePage().props
+  const isLibrarian = auth?.user?.role === "librarian"
+
+  const mainNavItems: NavItem[] = [
+    {
+      title: "Dashboard",
+      href: dashboardPath(),
+      icon: LayoutGrid,
+    },
+    ...(isLibrarian
+      ? [
+          {
+            title: "Books",
+            href: booksPath(),
+            icon: Library,
+          },
+        ]
+      : []),
+  ]
+
   return (
     <Sidebar collapsible="icon" variant="inset">
       <SidebarHeader>

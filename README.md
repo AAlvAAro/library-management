@@ -1,12 +1,16 @@
-# Inertia Rails React Starter Kit
+# Library Management System
 
-A modern full-stack starter application with Rails backend and React frontend using Inertia.js based on the [Laravel Starter Kit](https://github.com/laravel/react-starter-kit).
+A modern full-stack library management application with Rails backend and React frontend using Inertia.js, featuring role-based access control and a RESTful JSON API.
 
 ## Features
 
 - [Inertia Rails](https://inertia-rails.dev) & [Vite Rails](https://vite-ruby.netlify.app) setup
 - [React](https://react.dev) frontend with TypeScript & [shadcn/ui](https://ui.shadcn.com) component library
-- User authentication system (based on [Authentication Zero](https://github.com/lazaronixon/authentication-zero))
+- User authentication system with role-based access (Librarian/Member)
+- Book management with CRUD operations
+- Borrowing and return system with due date tracking
+- RESTful JSON API under `/api/v1` namespace
+- Comprehensive test coverage with RSpec
 - [Kamal](https://kamal-deploy.org/) for deployment
 - Optional SSR support
 
@@ -34,19 +38,72 @@ See also:
 
 ## Test Credentials
 
-The application includes two test users with different roles:
+The application includes test users with different roles:
 
 ### Librarian Account
 - **Email:** librarian@bookmanagement.com
 - **Username:** librarian_1
 - **Password:** password123456
-- **Role:** Librarian (full access)
+- **Role:** Librarian (full access to books, members, and API)
 
-### Member Account
+### Member Accounts
 - **Email:** member@bookmanagement.com
 - **Username:** member_1
 - **Password:** password123456
-- **Role:** Member (limited access)
+- **Role:** Member (can browse books and manage borrowings)
+
+Additional test members with overdue books are created during seeding for testing purposes.
+
+## API Documentation
+
+The application provides a RESTful JSON API under the `/api/v1` namespace. Librarians can access the full API documentation at `/api_docs` after signing in.
+
+### Available Endpoints
+
+**Books**
+- `GET /api/v1/books` - List all books (supports ?query and ?filter parameters)
+- `GET /api/v1/books/:id` - Get a specific book
+- `POST /api/v1/books` - Create a book (librarian only)
+- `PATCH /api/v1/books/:id` - Update a book (librarian only)
+- `DELETE /api/v1/books/:id` - Delete a book (librarian only)
+
+**Borrowings**
+- `GET /api/v1/borrowings` - List borrowings (supports ?filter=due_today|overdue)
+- `POST /api/v1/borrowings` - Borrow a book (requires user_id and book_id)
+- `PATCH /api/v1/borrowings/:id/return` - Mark a book as returned
+
+**Members**
+- `GET /api/v1/members` - List all members (librarian only, supports ?filter=overdue)
+
+### Example API Request
+
+```bash
+# List all books
+curl http://localhost:3000/api/v1/books
+
+# Create a borrowing
+curl -X POST http://localhost:3000/api/v1/borrowings \
+  -H "Content-Type: application/json" \
+  -d '{"user_id": 1, "book_id": 1}'
+```
+
+## TODO
+
+### High Priority
+- [ ] Implement token-based authentication for API endpoints
+- [ ] Add API rate limiting
+- [ ] Add pagination to API responses
+
+### Medium Priority
+- [ ] Add email notifications for overdue books
+- [ ] Implement book reservations system
+- [ ] Add book cover image uploads
+- [ ] Generate API usage statistics for librarians
+
+### Low Priority
+- [ ] Add book reviews and ratings
+- [ ] Implement fine calculation for overdue books
+- [ ] Add export functionality (CSV/PDF) for reports
 
 ## Enabling SSR
 

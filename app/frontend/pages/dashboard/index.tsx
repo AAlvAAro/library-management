@@ -1,8 +1,9 @@
 import { Head, Link, usePage } from "@inertiajs/react"
-import { Library, BookMarked, Users } from "lucide-react"
+import { Library, BookMarked, Users, FileCode } from "lucide-react"
 
 import AppLayout from "@/layouts/app-layout"
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
 import { dashboardPath, booksPath, borrowingsPath, usersPath } from "@/routes"
 import type { BreadcrumbItem } from "@/types"
 
@@ -22,11 +23,21 @@ export default function Dashboard() {
       <Head title={breadcrumbs[breadcrumbs.length - 1].title} />
 
       <div className="flex flex-col gap-6 p-6">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
-          <p className="text-muted-foreground">
-            Welcome back, {auth?.user?.name}
-          </p>
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
+            <p className="text-muted-foreground">
+              Welcome back, {auth?.user?.name}
+            </p>
+          </div>
+          {isLibrarian && (
+            <Button asChild variant="outline">
+              <Link href="/api_docs">
+                <FileCode className="mr-2 h-4 w-4" />
+                API Documentation
+              </Link>
+            </Button>
+          )}
         </div>
 
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">

@@ -1,6 +1,18 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  namespace :api do
+    namespace :v1 do
+      resources :books
+      resources :borrowings, only: [:index, :create] do
+        member do
+          patch :return
+        end
+      end
+      resources :members, only: [:index]
+    end
+  end
+
   resources :books
   resources :borrowings, only: [:index, :create] do
     member do
@@ -22,6 +34,7 @@ Rails.application.routes.draw do
   end
 
   get :dashboard, to: "dashboard#index"
+  get :api_docs, to: "api_docs#index"
 
   namespace :settings do
     resource :profile, only: [:show, :update]

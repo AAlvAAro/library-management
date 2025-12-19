@@ -14,7 +14,7 @@ require "faker"
 
 puts "Creating users..."
 
-User.find_or_create_by!(email: "librarian@bookmanagement.com") do |user|
+User.find_or_create_by!(email: "librarian@demo.com") do |user|
   user.name = "librarian_1"
   user.password = "password123456"
   user.password_confirmation = "password123456"
@@ -22,7 +22,7 @@ User.find_or_create_by!(email: "librarian@bookmanagement.com") do |user|
   user.verified = true
 end
 
-User.find_or_create_by!(email: "member@bookmanagement.com") do |user|
+User.find_or_create_by!(email: "member@demo.com") do |user|
   user.name = "member_1"
   user.password = "password123456"
   user.password_confirmation = "password123456"
@@ -31,7 +31,7 @@ User.find_or_create_by!(email: "member@bookmanagement.com") do |user|
 end
 
 # Create additional members for testing overdue books
-member_2 = User.find_or_create_by!(email: "member2@bookmanagement.com") do |user|
+member_2 = User.find_or_create_by!(email: "member2@demo.com") do |user|
   user.name = "John Smith"
   user.password = "password123456"
   user.password_confirmation = "password123456"
@@ -39,7 +39,7 @@ member_2 = User.find_or_create_by!(email: "member2@bookmanagement.com") do |user
   user.verified = true
 end
 
-member_3 = User.find_or_create_by!(email: "member3@bookmanagement.com") do |user|
+member_3 = User.find_or_create_by!(email: "member3@demo.com") do |user|
   user.name = "Jane Doe"
   user.password = "password123456"
   user.password_confirmation = "password123456"
@@ -47,7 +47,7 @@ member_3 = User.find_or_create_by!(email: "member3@bookmanagement.com") do |user
   user.verified = true
 end
 
-member_4 = User.find_or_create_by!(email: "member4@bookmanagement.com") do |user|
+member_4 = User.find_or_create_by!(email: "member4@demo.com") do |user|
   user.name = "Bob Johnson"
   user.password = "password123456"
   user.password_confirmation = "password123456"

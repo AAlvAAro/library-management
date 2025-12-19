@@ -12,10 +12,10 @@ import { signInPath, signUpPath } from "@/routes"
 export default function Register() {
   return (
     <AuthLayout
-      title="Create an account"
-      description="Enter your details below to create your account"
+      title="Create account"
+      description="Join Library Management and start managing your library"
     >
-      <Head title="Register" />
+      <Head title="Create Account" />
       <Form
         method="post"
         action={signUpPath()}
@@ -25,9 +25,9 @@ export default function Register() {
       >
         {({ processing, errors }) => (
           <>
-            <div className="grid gap-6">
+            <div className="grid gap-5">
               <div className="grid gap-2">
-                <Label htmlFor="name">Name</Label>
+                <Label htmlFor="name" className="font-semibold">Full Name</Label>
                 <Input
                   id="name"
                   type="text"
@@ -37,13 +37,14 @@ export default function Register() {
                   tabIndex={1}
                   autoComplete="name"
                   disabled={processing}
-                  placeholder="Full name"
+                  placeholder="John Doe"
+                  className="border-2 border-foreground"
                 />
                 <InputError message={errors.name} className="mt-2" />
               </div>
 
               <div className="grid gap-2">
-                <Label htmlFor="email">Email address</Label>
+                <Label htmlFor="email" className="font-semibold">Email</Label>
                 <Input
                   id="email"
                   type="email"
@@ -51,13 +52,14 @@ export default function Register() {
                   required
                   tabIndex={2}
                   autoComplete="email"
-                  placeholder="email@example.com"
+                  placeholder="you@example.com"
+                  className="border-2 border-foreground"
                 />
                 <InputError message={errors.email} />
               </div>
 
               <div className="grid gap-2">
-                <Label htmlFor="password">Password</Label>
+                <Label htmlFor="password" className="font-semibold">Password</Label>
                 <Input
                   id="password"
                   type="password"
@@ -65,13 +67,14 @@ export default function Register() {
                   required
                   tabIndex={3}
                   autoComplete="new-password"
-                  placeholder="Password"
+                  placeholder="••••••••"
+                  className="border-2 border-foreground"
                 />
                 <InputError message={errors.password} />
               </div>
 
               <div className="grid gap-2">
-                <Label htmlFor="password_confirmation">Confirm password</Label>
+                <Label htmlFor="password_confirmation" className="font-semibold">Confirm Password</Label>
                 <Input
                   id="password_confirmation"
                   type="password"
@@ -79,21 +82,49 @@ export default function Register() {
                   required
                   tabIndex={4}
                   autoComplete="new-password"
-                  placeholder="Confirm password"
+                  placeholder="••••••••"
+                  className="border-2 border-foreground"
                 />
                 <InputError message={errors.password_confirmation} />
               </div>
 
-              <Button type="submit" className="mt-2 w-full" tabIndex={5}>
+              <div className="grid gap-2">
+                <Label className="font-semibold">Account Type</Label>
+                <div className="flex items-center gap-6">
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="role"
+                      value="member"
+                      defaultChecked
+                      tabIndex={5}
+                      className="h-4 w-4 border-2 border-foreground"
+                    />
+                    <span>Member</span>
+                  </label>
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="role"
+                      value="librarian"
+                      tabIndex={6}
+                      className="h-4 w-4 border-2 border-foreground"
+                    />
+                    <span>Librarian</span>
+                  </label>
+                </div>
+              </div>
+
+              <Button type="submit" className="mt-2 w-full border-2 border-foreground font-semibold" tabIndex={7}>
                 {processing && <Spinner />}
-                Create account
+                Create Account
               </Button>
             </div>
 
             <div className="text-muted-foreground text-center text-sm">
               Already have an account?{" "}
-              <TextLink href={signInPath()} tabIndex={6}>
-                Log in
+              <TextLink href={signInPath()} tabIndex={8} className="underline font-medium text-foreground">
+                Sign in
               </TextLink>
             </div>
           </>

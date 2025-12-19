@@ -1,7 +1,9 @@
 import { Head, Link, usePage } from "@inertiajs/react"
+import { ArrowRight, BookOpen, Clock, Users, Shield } from "lucide-react"
 
 import AppLogoIcon from "@/components/app-logo-icon"
-import { dashboardPath, signInPath } from "@/routes"
+import { Button } from "@/components/ui/button"
+import { dashboardPath, signInPath, signUpPath } from "@/routes"
 
 export default function Welcome() {
   const page = usePage()
@@ -9,117 +11,185 @@ export default function Welcome() {
 
   return (
     <>
-      <Head title="Welcome">
-        <link rel="preconnect" href="https://fonts.bunny.net" />
-        <link
-          href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600"
-          rel="stylesheet"
-        />
-      </Head>
+      <Head title="Library Management" />
 
-      <div className="flex min-h-screen flex-col items-center bg-[#FDFDFC] p-6 text-[#1b1b18] lg:justify-center lg:p-8 dark:bg-[#0a0a0a]">
-        <header className="mb-6 w-full max-w-[335px] text-sm not-has-[nav]:hidden lg:max-w-4xl">
-          <nav className="flex items-center justify-end gap-4">
+      <div className="flex min-h-screen flex-col bg-background text-foreground">
+        {/* Header */}
+        <header className="flex items-center justify-between px-6 py-4 border-b-2 border-foreground">
+          <div className="flex items-center gap-2">
+            <AppLogoIcon className="h-6 w-6" />
+            <span className="font-bold text-lg">Library Management</span>
+          </div>
+          <nav className="flex items-center gap-4">
             {auth.user ? (
-              <Link
-                href={dashboardPath()}
-                className="inline-block rounded-sm border border-[#19140035] px-5 py-1.5 text-sm leading-normal text-[#1b1b18] hover:border-[#1915014a] dark:border-[#3E3E3A] dark:text-[#EDEDEC] dark:hover:border-[#62605b]"
-              >
-                Dashboard
-              </Link>
+              <Button asChild className="border-2 border-foreground">
+                <Link href={dashboardPath()}>Dashboard</Link>
+              </Button>
             ) : (
               <>
-                <Link
-                  href={signInPath()}
-                  className="inline-block rounded-sm border border-transparent px-5 py-1.5 text-sm leading-normal text-[#1b1b18] hover:border-[#19140035] dark:text-[#EDEDEC] dark:hover:border-[#3E3E3A]"
-                >
-                  Log in
+                <Link href={signInPath()} className="font-medium hover:underline">
+                  Login
                 </Link>
+                <Button asChild className="border-2 border-foreground">
+                  <Link href={signUpPath()}>Get Started</Link>
+                </Button>
               </>
             )}
           </nav>
         </header>
 
-        <div className="flex w-full items-center justify-center opacity-100 transition-opacity duration-750 lg:grow starting:opacity-0">
-          <main className="flex w-full max-w-[335px] flex-col-reverse lg:max-w-4xl lg:flex-row">
-            <div className="flex-1 rounded-br-lg rounded-bl-lg bg-white p-6 pb-12 text-[13px] leading-[20px] shadow-[inset_0px_0px_0px_1px_rgba(26,26,0,0.16)] lg:rounded-tl-lg lg:rounded-br-none lg:p-20 dark:bg-[#161615] dark:text-[#EDEDEC] dark:shadow-[inset_0px_0px_0px_1px_#fffaed2d]">
-              <h1 className="mb-1 font-medium">
-                {import.meta.env.VITE_APP_NAME ?? "Library Management"}
-              </h1>
-              <p className="mb-2 text-[#706f6c] dark:text-[#A1A09A]">
-                Rails + Inertia.js + React + shadcn/ui
-                <br />
-                Here are some resources to begin:
+        {/* Hero Section */}
+        <section className="px-6 py-16 md:py-24 border-b-2 border-foreground">
+          <div className="max-w-4xl">
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-tight mb-6">
+              Modern Library<br />Management
+            </h1>
+
+            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mb-8">
+              Streamline your library operations with our powerful book management system. Track borrowings, manage inventory, and serve your members better.
+            </p>
+
+            <div className="flex flex-wrap gap-4">
+              {auth.user ? (
+                <Button asChild size="lg" className="border-2 border-foreground gap-2">
+                  <Link href={dashboardPath()}>
+                    Go to Dashboard
+                    <ArrowRight className="h-4 w-4" />
+                  </Link>
+                </Button>
+              ) : (
+                <>
+                  <Button asChild size="lg" className="border-2 border-foreground gap-2">
+                    <Link href={signUpPath()}>
+                      Start Free
+                      <ArrowRight className="h-4 w-4" />
+                    </Link>
+                  </Button>
+                  <Button asChild variant="outline" size="lg" className="border-2 border-foreground">
+                    <Link href={signInPath()}>Sign In</Link>
+                  </Button>
+                </>
+              )}
+            </div>
+          </div>
+        </section>
+
+        {/* Features Section */}
+        <section className="px-6 py-16 border-b-2 border-foreground">
+          <h2 className="text-3xl md:text-4xl font-bold mb-12">Everything you need</h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="border-2 border-foreground p-6">
+              <BookOpen className="h-8 w-8 mb-4" />
+              <h3 className="font-bold text-lg mb-3">Book Management</h3>
+              <p className="text-muted-foreground text-sm">
+                Add, edit, and manage your entire book collection. Track titles, authors, genres, ISBN numbers, and available copies in one place.
               </p>
+            </div>
+            <div className="border-2 border-foreground p-6">
+              <Clock className="h-8 w-8 mb-4" />
+              <h3 className="font-bold text-lg mb-3">Borrowing System</h3>
+              <p className="text-muted-foreground text-sm">
+                Seamlessly track book borrowings and returns. Automatic due date calculation and overdue notifications keep everyone informed.
+              </p>
+            </div>
+            <div className="border-2 border-foreground p-6">
+              <Users className="h-8 w-8 mb-4" />
+              <h3 className="font-bold text-lg mb-3">Member Dashboard</h3>
+              <p className="text-muted-foreground text-sm">
+                Members can browse books, track their borrowings, and see due dates. A personalized experience for every library user.
+              </p>
+            </div>
+          </div>
+        </section>
 
-              <ul className="mb-4 flex flex-col lg:mb-6">
-                {[
-                  {
-                    text: "Inertia Rails Docs",
-                    href: "https://inertia-rails.dev",
-                  },
-                  {
-                    text: "shadcn/ui Components",
-                    href: "https://ui.shadcn.com",
-                  },
-                  {
-                    text: "React Docs",
-                    href: "https://react.dev",
-                  },
-                  {
-                    text: "Rails Guides",
-                    href: "https://guides.rubyonrails.org",
-                  },
-                ].map((resource, index) => (
-                  <ResourceItem key={index} {...resource} />
-                ))}
-              </ul>
+        {/* Two Roles Section */}
+        <section className="px-6 py-16 border-b-2 border-foreground">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">Two Roles, One System</h2>
+          <p className="text-muted-foreground mb-12 max-w-xl">
+            Our system is designed with clear role separation to ensure smooth library operations.
+          </p>
 
-              <ul className="flex gap-3 text-sm leading-normal">
-                <li>
-                  <a
-                    href="https://inertia-rails.dev"
-                    target="_blank"
-                    className="inline-block rounded-sm border border-black bg-[#1b1b18] px-5 py-1.5 text-sm leading-normal text-white hover:border-black hover:bg-black dark:border-[#eeeeec] dark:bg-[#eeeeec] dark:text-[#1C1C1A] dark:hover:border-white dark:hover:bg-white"
-                    rel="noreferrer"
-                  >
-                    Learn More
-                  </a>
-                </li>
-              </ul>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Librarian Card */}
+            <div className="border-2 border-foreground overflow-hidden">
+              <div className="bg-foreground text-background px-6 py-4 flex items-center gap-3">
+                <Shield className="h-5 w-5" />
+                <span className="font-bold">Librarian</span>
+              </div>
+              <div className="p-6 space-y-3">
+                <div className="flex items-start gap-3">
+                  <ArrowRight className="h-4 w-4 mt-1 flex-shrink-0" />
+                  <span className="text-sm">Add, edit, and delete books from the catalog</span>
+                </div>
+                <div className="flex items-start gap-3">
+                  <ArrowRight className="h-4 w-4 mt-1 flex-shrink-0" />
+                  <span className="text-sm">Mark borrowed books as returned</span>
+                </div>
+                <div className="flex items-start gap-3">
+                  <ArrowRight className="h-4 w-4 mt-1 flex-shrink-0" />
+                  <span className="text-sm">View total books and borrowing statistics</span>
+                </div>
+                <div className="flex items-start gap-3">
+                  <ArrowRight className="h-4 w-4 mt-1 flex-shrink-0" />
+                  <span className="text-sm">Monitor overdue books and member activity</span>
+                </div>
+              </div>
             </div>
 
-            <div className="relative -mb-px aspect-[335/376] w-full shrink-0 overflow-hidden rounded-t-lg bg-[#D30001] p-10 text-white lg:mb-0 lg:-ml-px lg:aspect-auto lg:w-[438px] lg:rounded-t-none lg:rounded-r-lg">
-              <AppLogoIcon className="h-full w-full" />
+            {/* Member Card */}
+            <div className="border-2 border-foreground overflow-hidden">
+              <div className="bg-foreground text-background px-6 py-4 flex items-center gap-3">
+                <Users className="h-5 w-5" />
+                <span className="font-bold">Member</span>
+              </div>
+              <div className="p-6 space-y-3">
+                <div className="flex items-start gap-3">
+                  <ArrowRight className="h-4 w-4 mt-1 flex-shrink-0" />
+                  <span className="text-sm">Browse and search the book catalog</span>
+                </div>
+                <div className="flex items-start gap-3">
+                  <ArrowRight className="h-4 w-4 mt-1 flex-shrink-0" />
+                  <span className="text-sm">Borrow available books (one copy per book)</span>
+                </div>
+                <div className="flex items-start gap-3">
+                  <ArrowRight className="h-4 w-4 mt-1 flex-shrink-0" />
+                  <span className="text-sm">View borrowed books with due dates</span>
+                </div>
+                <div className="flex items-start gap-3">
+                  <ArrowRight className="h-4 w-4 mt-1 flex-shrink-0" />
+                  <span className="text-sm">Track overdue books and borrowing history</span>
+                </div>
+              </div>
             </div>
-          </main>
-        </div>
+          </div>
+        </section>
+
+        {/* CTA Section */}
+        <section className="px-6 py-24 bg-foreground text-background text-center">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">Ready to get started?</h2>
+          <p className="text-background/70 mb-8 max-w-md mx-auto">
+            Join Library Management today and transform how you manage your library.
+          </p>
+          {auth.user ? (
+            <Button asChild variant="outline" size="lg" className="border-2 border-background bg-background text-foreground hover:bg-background/90">
+              <Link href={dashboardPath()}>Go to Dashboard</Link>
+            </Button>
+          ) : (
+            <Button asChild variant="outline" size="lg" className="border-2 border-background bg-background text-foreground hover:bg-background/90">
+              <Link href={signUpPath()}>Create Your Account</Link>
+            </Button>
+          )}
+        </section>
+
+        {/* Footer */}
+        <footer className="px-6 py-6 bg-foreground text-background flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <AppLogoIcon className="h-5 w-5" />
+            <span className="font-bold">Library Management</span>
+          </div>
+        </footer>
       </div>
     </>
-  )
-}
-
-function ResourceItem({ text, href }: { text: string; href: string }) {
-  return (
-    <li className="relative flex items-center gap-4 py-2">
-      <span className="flex h-3.5 w-3.5 items-center justify-center rounded-full border border-[#e3e3e0] bg-[#FDFDFC] shadow-[0px_0px_1px_0px_rgba(0,0,0,0.03),0px_1px_2px_0px_rgba(0,0,0,0.06)] dark:border-[#3E3E3A] dark:bg-[#161615]">
-        <span className="h-1.5 w-1.5 rounded-full bg-[#dbdbd7] dark:bg-[#3E3E3A]" />
-      </span>
-      <a
-        href={href}
-        target="_blank"
-        className="inline-flex items-center space-x-1 font-medium text-[#f53003] underline underline-offset-4 dark:text-[#FF4433]"
-        rel="noreferrer"
-      >
-        <span>{text}</span>
-        <svg width={10} height={11} viewBox="0 0 10 11" className="h-2.5 w-2.5">
-          <path
-            d="M7.70833 6.95834V2.79167H3.54167M2.5 8L7.5 3.00001"
-            stroke="currentColor"
-            strokeLinecap="square"
-          />
-        </svg>
-      </a>
-    </li>
   )
 }

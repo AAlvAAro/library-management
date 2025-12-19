@@ -68,7 +68,7 @@ group :development, :test do
   # Fixtures replacement with a straightforward definition syntax
   gem "factory_bot_rails"
 
-  gem "shoulda-matchers", "~> 6.0"
+  gem "shoulda-matchers", "~> 7.0"
 
   # Faker for generating fake data
   gem "faker"

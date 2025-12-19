@@ -34,9 +34,7 @@ Library Management is designed to help libraries of all sizes manage their book 
 - User authentication system with role-based access
 - RESTful JSON API under `/api/v1` namespace
 - Comprehensive test coverage with RSpec
-- Brutalist UI design with Space Grotesk typography
-- [Kamal](https://kamal-deploy.org/) for deployment
-- Optional SSR support
+- [Kamal](https://kamal-deploy.org/) for deployment (pending)
 
 > 📖 **Development Process**: See [DEVELOPMENT_WORKFLOW_README.md](DEVELOPMENT_WORKFLOW_README.md) for details on the AI-assisted development workflow used to build this project.
 
@@ -109,12 +107,11 @@ curl -X POST http://localhost:3000/api/v1/borrowings \
 
 ### High Priority
 - [ ] Implement token-based authentication for API endpoints
-- [ ] Add API rate limiting
 - [ ] Add pagination to API responses
+- [ ] Extract available books into a separate table so we can track how many copies of a book are available and they have a way to track physical copies of a book, i.e. barcodes or RFID tags
 
 ### Medium Priority
 - [ ] Add email notifications for overdue books
-- [ ] Implement book reservations system
 - [ ] Add book cover image uploads
 - [ ] Generate API usage statistics for librarians
 
@@ -122,47 +119,4 @@ curl -X POST http://localhost:3000/api/v1/borrowings \
 - [ ] Add book reviews and ratings
 - [ ] Implement fine calculation for overdue books
 - [ ] Add export functionality (CSV/PDF) for reports
-
-## Enabling SSR
-
-This starter kit comes with optional SSR support. To enable it, follow these steps:
-
-1. Open `app/frontend/entrypoints/inertia.ts` and uncomment part of the `setup` function:
-   ```ts
-   // Uncomment the following to enable SSR hydration:
-   // if (el.hasChildNodes()) {
-   //   hydrateRoot(el, createElement(App, props))
-   //   return
-   // }
-   ```
-2. Open `config/deploy.yml` and uncomment several lines:
-   ```yml
-   servers:
-     # Uncomment to enable SSR:
-     # vite_ssr:
-     #   hosts:
-     #     - 192.168.0.1
-     #   cmd: bundle exec vite ssr
-     #   options:
-     #     network-alias: vite_ssr
-
-   # ...
-
-   env:
-     clear:
-       # Uncomment to enable SSR:
-       # INERTIA_SSR_ENABLED: true
-       # INERTIA_SSR_URL: "http://vite_ssr:13714"
-
-   # ...
-
-   builder:
-     # Uncomment to enable SSR:
-     # dockerfile: Dockerfile-ssr
-   ```
-
-That's it! Now you can deploy your app with SSR support.
-
-## License
-
-The project is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+- [ ] Add API rate limiting

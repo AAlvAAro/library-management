@@ -38,6 +38,8 @@ Library Management is designed to help libraries of all sizes manage their book 
 - [Kamal](https://kamal-deploy.org/) for deployment
 - Optional SSR support
 
+> 📖 **Development Process**: See [DEVELOPMENT_WORKFLOW_README.md](DEVELOPMENT_WORKFLOW_README.md) for details on the AI-assisted development workflow used to build this project.
+
 ## Setup
 
 1. Clone this repository

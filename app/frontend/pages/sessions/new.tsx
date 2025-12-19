@@ -86,8 +86,8 @@ export default function Login() {
             {/* Demo Credentials */}
             <div className="border-2 border-dashed border-foreground p-4 text-sm">
               <p className="font-semibold mb-2">Demo Credentials:</p>
-              <p className="text-muted-foreground">Librarian: librarian@demo.com / password123</p>
-              <p className="text-muted-foreground">Member: member@demo.com / password123</p>
+              <p className="text-muted-foreground">Librarian: librarian@demo.com / password123456</p>
+              <p className="text-muted-foreground">Member: member@demo.com / password123456</p>
             </div>
           </>
         )}

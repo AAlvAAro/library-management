@@ -16,16 +16,16 @@ puts "Creating users..."
 
 User.find_or_create_by!(email: "librarian@demo.com") do |user|
   user.name = "librarian_1"
-  user.password = "password123456"
-  user.password_confirmation = "password123456"
+  user.password = "password"
+  user.password_confirmation = "password"
   user.role = :librarian
   user.verified = true
 end
 
 User.find_or_create_by!(email: "member@demo.com") do |user|
   user.name = "member_1"
-  user.password = "password123456"
-  user.password_confirmation = "password123456"
+  user.password = "password"
+  user.password_confirmation = "password"
   user.role = :member
   user.verified = true
 end
@@ -33,24 +33,24 @@ end
 # Create additional members for testing overdue books
 member_2 = User.find_or_create_by!(email: "member2@demo.com") do |user|
   user.name = "John Smith"
-  user.password = "password123456"
-  user.password_confirmation = "password123456"
+  user.password = "password"
+  user.password_confirmation = "password"
   user.role = :member
   user.verified = true
 end
 
 member_3 = User.find_or_create_by!(email: "member3@demo.com") do |user|
   user.name = "Jane Doe"
-  user.password = "password123456"
-  user.password_confirmation = "password123456"
+  user.password = "password"
+  user.password_confirmation = "password"
   user.role = :member
   user.verified = true
 end
 
 member_4 = User.find_or_create_by!(email: "member4@demo.com") do |user|
   user.name = "Bob Johnson"
-  user.password = "password123456"
-  user.password_confirmation = "password123456"
+  user.password = "password"
+  user.password_confirmation = "password"
   user.role = :member
   user.verified = true
 end

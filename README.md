@@ -41,13 +41,13 @@ See also:
 The application includes test users with different roles:
 
 ### Librarian Account
-- **Email:** librarian@bookmanagement.com
+- **Email:** librarian@demo.com
 - **Username:** librarian_1
 - **Password:** password123456
 - **Role:** Librarian (full access to books, members, and API)
 
 ### Member Accounts
-- **Email:** member@bookmanagement.com
+- **Email:** member@demo.com
 - **Username:** member_1
 - **Password:** password123456
 - **Role:** Member (can browse books and manage borrowings)

@@ -1,26 +1,42 @@
 # Library Management System
 
-A modern full-stack library management application with Rails backend and React frontend using Inertia.js, featuring role-based access control and a RESTful JSON API.
+A modern, full-stack library management application built with Ruby on Rails and React. Streamline your library operations with powerful book management, borrowing tracking, and member management features.
+
+![Library Management Screenshot](docs/screenshot.png)
+
+## Overview
+
+Library Management is designed to help libraries of all sizes manage their book collections and member borrowings efficiently. The system provides two distinct user roles:
+
+**For Librarians:**
+- Add, edit, and delete books from the catalog
+- Mark borrowed books as returned
+- View total books and borrowing statistics
+- Monitor overdue books and member activity
+
+**For Members:**
+- Browse and search the book catalog
+- Borrow available books (one copy per book)
+- View borrowed books with due dates
+- Track overdue books and borrowing history
 
 ## Features
 
+### Core Features
+- **Book Management** - Add, edit, and manage your entire book collection with titles, authors, genres, ISBN numbers, and available copies
+- **Borrowing System** - Seamlessly track book borrowings and returns with automatic due date calculation
+- **Member Dashboard** - Personalized experience for library members to browse books and track borrowings
+- **Role-Based Access** - Clear separation between librarian and member permissions
+
+### Technical Features
 - [Inertia Rails](https://inertia-rails.dev) & [Vite Rails](https://vite-ruby.netlify.app) setup
 - [React](https://react.dev) frontend with TypeScript & [shadcn/ui](https://ui.shadcn.com) component library
-- User authentication system with role-based access (Librarian/Member)
-- Book management with CRUD operations
-- Borrowing and return system with due date tracking
+- User authentication system with role-based access
 - RESTful JSON API under `/api/v1` namespace
 - Comprehensive test coverage with RSpec
+- Brutalist UI design with Space Grotesk typography
 - [Kamal](https://kamal-deploy.org/) for deployment
 - Optional SSR support
-
-See also:
-- [Svelte Starter Kit](https://github.com/inertia-rails/svelte-starter-kit) for Inertia Rails with Svelte
-- [Vue Starter Kit](https://github.com/inertia-rails/vue-starter-kit) for Inertia Rails with Vue
-
-<a href="https://evilmartians.com/?utm_source=inertia-rails-react-starter-kit&utm_campaign=project_page">
-<img src="https://evilmartians.com/badges/sponsored-by-evil-martians.svg" alt="Built by Evil Martians" width="236" height="54">
-</a>
 
 ## Setup
 
